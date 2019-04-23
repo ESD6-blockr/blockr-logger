@@ -5,7 +5,7 @@
 String repo = 'blockr-logger'
 
 Map settings = [
-    sonar_key: 'blockr-loggger',
+    sonar_key: 'blockr-logger',
     source_folder: 'src/',
     archive_folders: ['dist/']
 ]

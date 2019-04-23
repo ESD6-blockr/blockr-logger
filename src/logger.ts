@@ -1,6 +1,8 @@
 import * as Winston from "winston";
 
-const path = "logs/";
+const PATH = "logs/";
+const TIME_STAMP_INDENT: number = 19;
+const JSON_SPACING: number = 2;
 
 const alignedWithColorsAndTime = Winston.format.combine(
     Winston.format.colorize(),
@@ -14,8 +16,9 @@ const alignedWithColorsAndTime = Winston.format.combine(
             ...args
         } = info;
 
-        const ts = timestamp.slice(0, 19).replace("T", " ");
-        return `${ts} [${level}]: ${message} ${Object.keys(args).length ? JSON.stringify(args, null, 2) : ""}`;
+        const ts = timestamp.slice(0, TIME_STAMP_INDENT).replace("T", " ");
+        return `${ts} [${level}]: ${message} ${Object.keys(args).length ?
+            JSON.stringify(args, null, JSON_SPACING) : ""}`;
     }),
 );
 
@@ -24,11 +27,11 @@ export const logger = Winston.createLogger({
     transports: [
         new Winston.transports.Console({}),
         new Winston.transports.File({
-            filename: `${path}/info.log`,
+            filename: `${PATH}/info.log`,
             level: "info",
         }),
         new Winston.transports.File({
-            filename: `${path}/error.log`,
+            filename: `${PATH}/error.log`,
             level: "error",
         }),
     ],
