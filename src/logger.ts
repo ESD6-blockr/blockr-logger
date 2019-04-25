@@ -27,8 +27,7 @@ export const logger = Winston.createLogger({
     transports: [
         new Winston.transports.Console({}),
         new Winston.transports.File({
-            filename: `${PATH}/info.log`,
-            level: "info",
+            filename: `${PATH}/full.log`,
         }),
         new Winston.transports.File({
             filename: `${PATH}/error.log`,
