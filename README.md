@@ -22,7 +22,7 @@ All levels are formated in the same way: &emsp; `date` `time` [`level`]:  `messa
 
  **ES6**
  ```ts
- import logger from "@blockr/blockr-logger";
+ import { logger } from "@blockr/blockr-logger";
  ```
 
  **ES5**
