@@ -9,7 +9,7 @@ pids
 *.pid.lock
 
 #Logs
-Logs
+logs
 
 #Jest-junit
 junit.xml
