@@ -1,6 +1,6 @@
 {
   "name": "@blockr/blockr-logger",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "The general logger used within typescript blockr projects.",
   "main": "dist/logger.js",
   "scripts": {
