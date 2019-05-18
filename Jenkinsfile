@@ -8,7 +8,6 @@ Map settings = [
     sonar_key: 'blockr-logger',
     skip_tests: false,
     source_folder: 'src/',
-    skip_tests: true,
     archive_folders: ['dist/']
 ]
 
