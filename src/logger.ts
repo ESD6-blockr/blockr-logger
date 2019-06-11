@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import * as Winston from "winston";
 
 const PATH = "logs/";
@@ -22,9 +23,22 @@ const alignedWithColorsAndTime = Winston.format.combine(
     }),
 );
 
-export const logger = Winston.createLogger({
-    format: alignedWithColorsAndTime,
-    transports: [
+const hasPathAccess = (path: any): boolean => {
+    fs.access(path, fs.constants.R_OK | fs.constants.W_OK, (err) => {
+        return !!err;
+    });
+
+    return false;
+};
+
+const getTransports = (): any[] => {
+    if (hasPathAccess(PATH)) {
+        return [
+            new Winston.transports.Console({}),
+        ];
+    }
+
+    return [
         new Winston.transports.Console({}),
         new Winston.transports.File({
             filename: `${PATH}/full.log`,
@@ -33,5 +47,10 @@ export const logger = Winston.createLogger({
             filename: `${PATH}/error.log`,
             level: "error",
         }),
-    ],
+    ];
+};
+
+export const logger = Winston.createLogger({
+    format: alignedWithColorsAndTime,
+    transports: getTransports(),
 });
