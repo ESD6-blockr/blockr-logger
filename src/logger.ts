@@ -23,22 +23,16 @@ const alignedWithColorsAndTime = Winston.format.combine(
     }),
 );
 
-const hasPathAccess = (path: any): boolean => {
-    fs.access(path, fs.constants.R_OK | fs.constants.W_OK, (err) => {
-        return !!err;
+const hasPathAccess = async (path: any): Promise<boolean> => {
+    return new Promise((resolve) => {
+        fs.access(path, fs.constants.R_OK | fs.constants.W_OK, (err) => {
+            resolve(err == null);
+        });
     });
-
-    return false;
 };
 
-const getTransports = (): any[] => {
-    if (hasPathAccess(PATH)) {
-        return [
-            new Winston.transports.Console({}),
-        ];
-    }
-
-    return [
+const getTransports = async (): Promise<any[]> => {
+    return await hasPathAccess("./") ? [
         new Winston.transports.Console({}),
         new Winston.transports.File({
             filename: `${PATH}/full.log`,
@@ -47,10 +41,21 @@ const getTransports = (): any[] => {
             filename: `${PATH}/error.log`,
             level: "error",
         }),
+    ] : [
+        new Winston.transports.Console({}),
     ];
 };
 
-export const logger = Winston.createLogger({
+export let logger = Winston.createLogger({
     format: alignedWithColorsAndTime,
-    transports: getTransports(),
+    transports: [
+        new Winston.transports.Console({}),
+    ],
 });
+
+(async () => {
+    logger = Winston.createLogger({
+        format: alignedWithColorsAndTime,
+        transports: await getTransports(),
+    });
+})();

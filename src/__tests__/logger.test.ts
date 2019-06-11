@@ -6,7 +6,7 @@ describe("Logger util", () => {
     });
 
     it("Should have transportation options defined on import", () => {
-        expect(logger.transports.length).toBeGreaterThan(1);
+        expect(logger.transports.length).toBeGreaterThan(0);
     });
 
     it("Should match the defined logging format", () => {
